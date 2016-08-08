@@ -15,17 +15,8 @@ public class AllocateObjectQueue : MonoBehaviour
     private int margine = 10;
     private int startHaba = 50;
 
-    private void Awake()
-    {
-        // 左右キーで振り分けるテストコード
-        this.ObserveEveryValueChanged(_ => Input.GetKeyDown(KeyCode.RightArrow))
-            .Where(isDown => isDown)
-            .Subscribe(_ => RemoveToRight());
-
-        this.ObserveEveryValueChanged(_ => Input.GetKeyDown(KeyCode.LeftArrow))
-            .Where(isDown => isDown)
-            .Subscribe(_ => RemoveToLeft());
-    }
+    public event Action<RectTransform> OnRemovedToRight = _ => { };
+    public event Action<RectTransform> OnRemovedToLeft = _ => { };
 
     public void EnqueueObj(RectTransform item)
     {
@@ -58,10 +49,6 @@ public class AllocateObjectQueue : MonoBehaviour
         Reposition();
     }
 
-    public void DequeueItem()
-    {
-    }
-
     public void Reposition()
     {
         // すべての大きさ、現在座標を取得して、いい具合に動かす
@@ -90,8 +77,18 @@ public class AllocateObjectQueue : MonoBehaviour
         objectList.Remove(top);
 
         var w = Screen.width;
-        iTween.MoveTo(top.gameObject, iTween.Hash("x", w));
+        Hashtable parameters = new Hashtable();
+        parameters.Add("x", w);
+        parameters.Add("oncomplete", "CompleteRightHandler");
+        parameters.Add("oncompletetarget", gameObject);
+        parameters.Add("oncompleteparams", top);
+        iTween.MoveTo(top.gameObject, parameters);
         Reposition();
+    }
+
+    private void CompleteRightHandler(RectTransform rect)
+    {
+        OnRemovedToRight.Invoke(rect);
     }
 
     public void RemoveToLeft()
@@ -103,7 +100,16 @@ public class AllocateObjectQueue : MonoBehaviour
         objectList.Remove(top);
 
         var w = Screen.width;
-        iTween.MoveTo(top.gameObject, iTween.Hash("x", -w));
+        Hashtable parameters = new Hashtable();
+        parameters.Add("x", -w);
+        parameters.Add("oncomplete", "CompleteLeftHandler");
+        parameters.Add("oncompletetarget", gameObject);
+        parameters.Add("oncompleteparams", top);
+        iTween.MoveTo(top.gameObject, parameters);
         Reposition();
+    }
+    private void CompleteLeftHandler(RectTransform rect)
+    {
+        OnRemovedToLeft.Invoke(rect);
     }
 }

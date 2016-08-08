@@ -12,12 +12,11 @@ public static class ImageLoader
         return tex;
     }
 
-    public static Sprite LoadSprite(string imageFullPath, Rect rect, Vector2 pivot)
+    public static Sprite LoadSprite(string imageFullPath)
     {
-        Sprite sprite = new Sprite();
         var texture = LoadTexture2D(imageFullPath);
-        Sprite.Create(texture, rect, pivot);
-        return sprite;
+        var rect = new Rect(0, 0, texture.width, texture.height);
+        return Sprite.Create(texture, rect, Vector2.zero);
     }
 
     private static byte[] LoadBin(string path)
@@ -30,3 +29,4 @@ public static class ImageLoader
         }
     }
 }
+

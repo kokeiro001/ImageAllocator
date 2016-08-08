@@ -8,9 +8,9 @@ using UniRx.Triggers;
 
 
 
-public class AllocateObjectStack : MonoBehaviour
+public class AllocateObjectQueue : MonoBehaviour
 {
-    private List<AllocateObject> objectList = new List<AllocateObject>();
+    private List<RectTransform> objectList = new List<RectTransform>();
 
     private RectTransform rectTransform;
 
@@ -31,7 +31,7 @@ public class AllocateObjectStack : MonoBehaviour
             .Subscribe(_ => RemoveToLeft());
     }
 
-    public void EnqueueObj(AllocateObject item)
+    public void EnqueueObj(RectTransform item)
     {
         if(item == null)
         {
@@ -72,7 +72,7 @@ public class AllocateObjectStack : MonoBehaviour
 
         float x = transform.position.x;
         float y = transform.position.y;
-        y = rectTransform.sizeDelta.y;
+        //y -= rectTransform.sizeDelta.y;
 
         Vector3 risouPos = new Vector3(x, y);
 
@@ -106,7 +106,8 @@ public class AllocateObjectStack : MonoBehaviour
         var top = objectList[0];
         objectList.Remove(top);
 
-        iTween.MoveTo(top.gameObject, iTween.Hash("x", 0));
+        var w = Screen.width;
+        iTween.MoveTo(top.gameObject, iTween.Hash("x", -w));
         Reposition();
     }
 }

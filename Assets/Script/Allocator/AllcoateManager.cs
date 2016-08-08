@@ -5,9 +5,9 @@ using System;
 public class AllcoateManager : MonoBehaviour {
 
     [SerializeField]
-    private AllocateObjectStack stack = null;
+    private AllocateObjectQueue stack = null;
 
-    public void AddObj(AllocateObject obj)
+    public void AddObj(RectTransform obj)
     {
         if(stack == null)
         {

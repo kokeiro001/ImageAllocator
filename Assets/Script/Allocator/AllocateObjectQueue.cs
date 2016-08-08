@@ -12,15 +12,11 @@ public class AllocateObjectQueue : MonoBehaviour
 {
     private List<RectTransform> objectList = new List<RectTransform>();
 
-    private RectTransform rectTransform;
-
     private int margine = 10;
     private int startHaba = 50;
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-
         // 左右キーで振り分けるテストコード
         this.ObserveEveryValueChanged(_ => Input.GetKeyDown(KeyCode.RightArrow))
             .Where(isDown => isDown)

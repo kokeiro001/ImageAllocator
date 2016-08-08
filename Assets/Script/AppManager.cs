@@ -12,9 +12,6 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
     private AllcoateManager allocateManager = null;
 
     [SerializeField]
-    private GameObject spawnImagePrefab = null;
-
-    [SerializeField]
     private GameObject spawnArchivePrefab = null;
 
     private List<string> imageDirectories = null;
@@ -23,23 +20,6 @@ public class AppManager : SingletonMonoBehaviour<AppManager>
     {
         imageDirectories = FileUtilitiy.GetImageDirectories(Config.ImagePath);
 
-        // spawn adon
-        //this.ObserveEveryValueChanged(_ => Input.GetKeyDown(KeyCode.Q))
-        //    .Where(isDown => isDown)
-        //    .Subscribe(_ => {
-        //        if(allocateManager != null && spawnImagePrefab != null)
-        //        {
-        //            var obj = Instantiate(spawnImagePrefab);
-        //            string path = @"C:\workspace\32310635_2180519179_62large.jpg";
-        //            Observable
-        //                .ReturnUnit()
-        //                .DelayFrame(1)
-        //                .Subscribe(a => {
-        //                    obj.GetComponent<UnityEngine.UI.Image>().sprite = ImageLoader.LoadSprite(path);
-        //                });
-        //            allocateManager.AddObj(obj.GetComponent<RectTransform>());
-        //        }
-        //    });
         this.ObserveEveryValueChanged(_ => Input.GetKeyDown(KeyCode.Q))
             .Where(isDown => isDown)
             .Subscribe(_ => {

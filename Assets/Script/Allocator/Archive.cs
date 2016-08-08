@@ -4,18 +4,14 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.IO;
-
 [RequireComponent(typeof(RectTransform))]
 public class Archive : MonoBehaviour
 {
     [SerializeField]
     private GameObject imageObjectPrefab = null;
 
-    private RectTransform rectTransform = null;
-
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
     }
 
     public void LoadImageDirectory(string dir)

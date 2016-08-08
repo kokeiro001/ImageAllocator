@@ -39,7 +39,6 @@ public class ImageSizeController : MonoBehaviour
         {
             var imgW = (float)image.sprite.texture.width;
             var imgH = (float)image.sprite.texture.height;
-            var aspectRate = imgW / imgH;
 
             var newW = (parent.sizeDelta.y * imgW) / imgH;
             var newH = parent.sizeDelta.y;
